@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>العراق الأخضر - دخول حقيقي</title>
+    <title>العراق الأخضر | دخول</title>
+    <!-- مكتبات Firebase الأساسية -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
@@ -20,41 +21,34 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // جعل الدوال متاحة عالمياً للضغط على الأزرار
-        window.signUp = () => {
+        window.handleAction = (isSignup) => {
             const email = document.getElementById('email').value;
             const pass = document.getElementById('pass').value;
-            createUserWithEmailAndPassword(auth, email, pass)
-                .then(() => alert("تم إنشاء الحساب بنجاح في قاعدة البيانات!"))
-                .catch((error) => alert("خطأ: " + error.message));
-        };
 
-        window.signIn = () => {
-            const email = document.getElementById('email').value;
-            const pass = document.getElementById('pass').value;
-            signInWithEmailAndPassword(auth, email, pass)
-                .then(() => {
-                    document.body.innerHTML = '<div style="display:flex; justify-content:center; align-items:center; height:100vh;"><h1>مرحباً بك في لوحة التحكم الحقيقية</h1></div>';
-                })
-                .catch((error) => alert("خطأ في الدخول: " + error.message));
+            if (isSignup) {
+                createUserWithEmailAndPassword(auth, email, pass)
+                    .then(() => alert("تم إنشاء الحساب!"))
+                    .catch(err => alert("خطأ في الإنشاء: " + err.message));
+            } else {
+                signInWithEmailAndPassword(auth, email, pass)
+                    .then(() => alert("تم تسجيل الدخول بنجاح!"))
+                    .catch(err => alert("خطأ في الدخول: " + err.message));
+            }
         };
     </script>
     <style>
         body { font-family: sans-serif; background: #f8fafc; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .box { background: white; padding: 30px; border-radius: 20px; width: 300px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: #065f46; color: white; border: none; border-radius: 8px; cursor: pointer; }
+        .card { background: white; padding: 25px; border-radius: 20px; width: 90%; max-width: 350px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; border: none; border-radius: 10px; color: white; margin-top: 5px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
-
-    <div class="box">
+    <div class="card">
         <input type="email" id="email" placeholder="البريد الإلكتروني">
         <input type="password" id="pass" placeholder="كلمة المرور">
-        <button onclick="signUp()">إنشاء حساب جديد</button>
-        <p></p>
-        <button onclick="signIn()" style="background:#451a03;">تسجيل الدخول</button>
+        <button onclick="handleAction(true)" style="background: #065f46;">إنشاء حساب جديد</button>
+        <button onclick="handleAction(false)" style="background: #451a03; margin-top:10px;">تسجيل الدخول</button>
     </div>
-
 </body>
 </html>
