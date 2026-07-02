@@ -2,78 +2,59 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>العراق الأخضر | نظام الدخول</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>العراق الأخضر - دخول حقيقي</title>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD0B-toxH6Khu8961ENiq6DrEeWlkauKvU",
+            authDomain: "mohmmed-ef63d.firebaseapp.com",
+            projectId: "mohmmed-ef63d",
+            storageBucket: "mohmmed-ef63d.firebasestorage.app",
+            messagingSenderId: "670249943171",
+            appId: "1:670249943171:web:3cf48a7c06210b9bd05bb6"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // جعل الدوال متاحة عالمياً للضغط على الأزرار
+        window.signUp = () => {
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('pass').value;
+            createUserWithEmailAndPassword(auth, email, pass)
+                .then(() => alert("تم إنشاء الحساب بنجاح في قاعدة البيانات!"))
+                .catch((error) => alert("خطأ: " + error.message));
+        };
+
+        window.signIn = () => {
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('pass').value;
+            signInWithEmailAndPassword(auth, email, pass)
+                .then(() => {
+                    document.body.innerHTML = '<div style="display:flex; justify-content:center; align-items:center; height:100vh;"><h1>مرحباً بك في لوحة التحكم الحقيقية</h1></div>';
+                })
+                .catch((error) => alert("خطأ في الدخول: " + error.message));
+        };
+    </script>
     <style>
-        :root { --primary: #065f46; --bg: #f8fafc; }
-        body { font-family: 'Tajawal', sans-serif; background: var(--bg); margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
-        .app-container { width: 100%; max-width: 400px; padding: 20px; }
-        .card { background: white; padding: 30px; border-radius: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        h2 { color: var(--primary); text-align: center; margin-bottom: 25px; }
-        input { width: 100%; padding: 15px; margin: 8px 0; border: 1.5px solid #e2e8f0; border-radius: 12px; box-sizing: border-box; }
-        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 12px; font-weight: bold; margin-top: 15px; cursor: pointer; }
-        .hidden { display: none; }
-        .link { text-align: center; margin-top: 15px; color: #64748b; font-size: 0.9rem; cursor: pointer; }
+        body { font-family: sans-serif; background: #f8fafc; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .box { background: white; padding: 30px; border-radius: 20px; width: 300px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #065f46; color: white; border: none; border-radius: 8px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    <!-- واجهة الإنشاء -->
-    <div class="card" id="signup">
-        <h2>إنشاء حساب</h2>
-        <input type="text" id="s_name" placeholder="الاسم الكامل">
-        <input type="email" id="s_email" placeholder="البريد الإلكتروني">
-        <input type="password" id="s_pass" placeholder="كلمة المرور">
-        <button onclick="doSignup()">إنشاء الحساب</button>
-        <p class="link" onclick="toggle()">لديك حساب؟ سجل دخولك</p>
+    <div class="box">
+        <input type="email" id="email" placeholder="البريد الإلكتروني">
+        <input type="password" id="pass" placeholder="كلمة المرور">
+        <button onclick="signUp()">إنشاء حساب جديد</button>
+        <p></p>
+        <button onclick="signIn()" style="background:#451a03;">تسجيل الدخول</button>
     </div>
 
-    <!-- واجهة الدخول -->
-    <div class="card hidden" id="login">
-        <h2>تسجيل الدخول</h2>
-        <input type="email" id="l_email" placeholder="البريد الإلكتروني">
-        <input type="password" id="l_pass" placeholder="كلمة المرور">
-        <button onclick="doLogin()">دخول</button>
-        <p class="link" onclick="toggle()">ليس لديك حساب؟</p>
-    </div>
-</div>
-
-<script>
-    function toggle() {
-        document.getElementById('signup').classList.toggle('hidden');
-        document.getElementById('login').classList.toggle('hidden');
-    }
-
-    function doSignup() {
-        const email = document.getElementById('s_email').value;
-        const pass = document.getElementById('s_pass').value;
-        const name = document.getElementById('s_name').value;
-
-        if(email && pass && name) {
-            localStorage.setItem('db_email', email);
-            localStorage.setItem('db_pass', pass);
-            localStorage.setItem('db_name', name);
-            alert('تم إنشاء الحساب بنجاح!');
-            toggle();
-        } else {
-            alert('يرجى ملء جميع الحقول');
-        }
-    }
-
-    function doLogin() {
-        const email = document.getElementById('l_email').value;
-        const pass = document.getElementById('l_pass').value;
-
-        if(localStorage.getItem('db_email') === email && localStorage.getItem('db_pass') === pass) {
-            // الانتقال لصفحة بيضاء
-            document.body.innerHTML = '<div style="background:white; height:100vh; width:100%;"></div>';
-            console.log("تم الدخول بنجاح");
-        } else {
-            alert('البريد أو كلمة المرور غير صحيحة');
-        }
-    }
-</script>
 </body>
 </html>
