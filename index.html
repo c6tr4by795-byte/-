@@ -1,9 +1,64 @@
-// ضعه في بداية ملف الـ JS في كل الصفحات
-const checkUser = () => {
-    const realName = localStorage.getItem('iraqGreen_userName');
-    // إذا كنت في صفحة غير الـ index ولا يوجد اسم مستخدم، فقط هنا يرجعك
-    if (!realName && window.location.pathname.indexOf('index.html') === -1) {
-        window.location.href = 'index.html';
-    }
-};
-checkUser();
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دخول المستخدم</title>
+    <style>
+        :root { --primary: #10b981; --bg: #0f172a; --card: #1e293b; --text: #f8fafc; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .box { background: var(--card); padding: 30px; border-radius: 20px; width: 85%; max-width: 350px; box-shadow: 0 15px 30px rgba(0,0,0,0.4); text-align: center; }
+        h2 { color: var(--primary); margin-bottom: 20px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: none; background: #334155; color: white; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: var(--primary); border: none; border-radius: 10px; color: #000; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .toggle-btn { margin-top: 15px; font-size: 0.8rem; color: #94a3b8; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h2 id="formTitle">إنشاء حساب</h2>
+        <form id="mainForm">
+            <input type="text" id="name" placeholder="الاسم الكامل" required>
+            <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+            <button type="submit" id="submitBtn">إنشاء الحساب</button>
+        </form>
+        <p class="toggle-btn" id="toggleText">لديك حساب بالفعل؟ سجل دخولك</p>
+    </div>
+
+    <script>
+        const formTitle = document.getElementById('formTitle');
+        const submitBtn = document.getElementById('submitBtn');
+        const toggleText = document.getElementById('toggleText');
+        const mainForm = document.getElementById('mainForm');
+        
+        let isLogin = false;
+
+        toggleText.onclick = () => {
+            isLogin = !isLogin;
+            formTitle.textContent = isLogin ? "تسجيل الدخول" : "إنشاء حساب";
+            submitBtn.textContent = isLogin ? "دخول" : "إنشاء الحساب";
+            toggleText.textContent = isLogin ? "ليس لديك حساب؟ أنشئ واحداً" : "لديك حساب بالفعل؟ سجل دخولك";
+        };
+
+        mainForm.onsubmit = (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            
+            if (!isLogin) {
+                // عملية إنشاء الحساب
+                localStorage.setItem('user_name', name);
+                alert('تم إنشاء الحساب بنجاح يا ' + name);
+            } else {
+                // عملية تسجيل الدخول
+                const savedName = localStorage.getItem('user_name');
+                if (savedName === name) {
+                    alert('أهلاً بعودتك يا ' + name);
+                } else {
+                    alert('الاسم غير صحيح، يرجى التأكد!');
+                }
+            }
+        };
+    </script>
+</body>
+</html>
