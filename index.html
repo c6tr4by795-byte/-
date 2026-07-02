@@ -2,86 +2,72 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>العراق الأخضر | تسجيل جديد</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>العراق الأخضر | دخول</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #065f46; 
-            --bg: #f8fafc;
-            --card: #ffffff;
-            --text: #1e293b;
-        }
-        body { font-family: 'Tajawal', sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .box { background: var(--card); padding: 40px; border-radius: 30px; width: 85%; max-width: 400px; box-shadow: 0 20px 40px rgba(0,0,0,0.06); text-align: center; border: 1px solid rgba(0,0,0,0.05); }
-        h2 { color: var(--primary); margin-bottom: 25px; font-weight: 700; }
-        input, select { width: 100%; padding: 16px; margin: 10px 0; border-radius: 15px; border: 2px solid #e2e8f0; background: #f8fafc; color: #1e293b; box-sizing: border-box; font-size: 15px; }
-        input:focus { border-color: var(--primary); outline: none; }
-        button { width: 100%; padding: 16px; background: var(--primary); border: none; border-radius: 15px; color: white; font-weight: 700; cursor: pointer; margin-top: 15px; font-size: 16px; }
-        button:hover { opacity: 0.9; }
-        .toggle-btn { margin-top: 20px; font-size: 0.85rem; color: #64748b; cursor: pointer; }
-        #dashboard { display: none; }
+        :root { --primary: #065f46; --bg: #f8fafc; }
+        body { font-family: 'Tajawal', sans-serif; background: var(--bg); display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .box { background: white; padding: 40px; border-radius: 30px; width: 350px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; }
+        input { width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #e2e8f0; border-radius: 12px; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; }
+        .hidden { display: none; }
+        .toggle-btn { margin-top: 15px; color: #64748b; cursor: pointer; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
-    <div class="box" id="authBox">
-        <h2 id="formTitle">إنشاء حساب جديد</h2>
-        <form id="mainForm">
-            <input type="text" id="name" placeholder="الاسم الكامل" required>
-            <input type="number" id="age" placeholder="العمر" required min="10" max="100">
-            <select id="city">
-                <option value="">اختر محافظتك</option>
-                <option value="النجف">النجف</option>
-                <option value="بغداد">بغداد</option>
-                <option value="البصرة">البصرة</option>
-                <option value="أخرى">محافظة أخرى</option>
-            </select>
-            <input type="email" id="email" placeholder="البريد الإلكتروني" required>
-            <button type="submit" id="submitBtn">تأكيد التسجيل</button>
-        </form>
-        <p class="toggle-btn" id="toggleText">لديك حساب بالفعل؟ سجل دخولك</p>
+    <!-- واجهة الإنشاء -->
+    <div class="box" id="signupBox">
+        <h2>إنشاء حساب جديد</h2>
+        <input type="text" id="s_name" placeholder="الاسم الكامل">
+        <input type="number" id="s_age" placeholder="العمر">
+        <input type="text" id="s_city" placeholder="المحافظة">
+        <input type="email" id="s_email" placeholder="البريد الإلكتروني">
+        <button onclick="handleSignup()">تأكيد التسجيل</button>
+        <p class="toggle-btn" onclick="toggleView()">لديك حساب؟ سجل دخولك</p>
     </div>
 
-    <div class="box" id="dashboard">
-        <h2 id="welcomeMsg">أهلاً بك</h2>
-        <p id="userDetails" style="color: #64748b;"></p>
+    <!-- واجهة الدخول -->
+    <div class="box hidden" id="loginBox">
+        <h2>تسجيل الدخول</h2>
+        <input type="text" id="l_name" placeholder="أدخل اسمك المسجل">
+        <button onclick="handleLogin()">دخول</button>
+        <p class="toggle-btn" onclick="toggleView()">ليس لديك حساب؟ أنشئ حساباً</p>
+    </div>
+
+    <!-- لوحة التحكم -->
+    <div class="box hidden" id="dashboard">
+        <h2>أهلاً بك مجدداً</h2>
+        <p id="profileData"></p>
         <button onclick="location.reload()">تسجيل خروج</button>
     </div>
 
     <script>
-        const authBox = document.getElementById('authBox'), dashboard = document.getElementById('dashboard'), formTitle = document.getElementById('formTitle'), submitBtn = document.getElementById('submitBtn'), toggleText = document.getElementById('toggleText'), mainForm = document.getElementById('mainForm');
-        let isLogin = false;
+        function toggleView() {
+            document.getElementById('signupBox').classList.toggle('hidden');
+            document.getElementById('loginBox').classList.toggle('hidden');
+        }
 
-        toggleText.onclick = () => {
-            isLogin = !isLogin;
-            formTitle.textContent = isLogin ? "تسجيل الدخول" : "إنشاء حساب جديد";
-            submitBtn.textContent = isLogin ? "دخول" : "تأكيد التسجيل";
-            toggleText.textContent = isLogin ? "ليس لديك حساب؟" : "لديك حساب بالفعل؟";
-        };
+        function handleSignup() {
+            const name = document.getElementById('s_name').value;
+            localStorage.setItem('user_name', name);
+            localStorage.setItem('user_age', document.getElementById('s_age').value);
+            localStorage.setItem('user_city', document.getElementById('s_city').value);
+            alert('تم إنشاء حسابك يا ' + name);
+            toggleView();
+        }
 
-        mainForm.onsubmit = (e) => {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            const age = document.getElementById('age').value;
-            const city = document.getElementById('city').value;
-
-            if (!isLogin) {
-                localStorage.setItem('user_name', name);
-                localStorage.setItem('user_age', age);
-                localStorage.setItem('user_city', city);
-                alert('تم حفظ بياناتك بنجاح!');
+        function handleLogin() {
+            const inputName = document.getElementById('l_name').value;
+            if (localStorage.getItem('user_name') === inputName) {
+                document.getElementById('loginBox').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+                document.getElementById('profileData').textContent = 
+                    `الاسم: ${inputName} | العمر: ${localStorage.getItem('user_age')} | المحافظة: ${localStorage.getItem('user_city')}`;
             } else {
-                if (localStorage.getItem('user_name') === name) {
-                    authBox.style.display = 'none';
-                    dashboard.style.display = 'block';
-                    document.getElementById('welcomeMsg').textContent = "أهلاً " + name;
-                    document.getElementById('userDetails').textContent = `العمر: ${localStorage.getItem('user_age')} | المحافظة: ${localStorage.getItem('user_city')}`;
-                } else {
-                    alert('عذراً، هذا الحساب غير مسجل!');
-                }
+                alert('الاسم غير صحيح!');
             }
-        };
+        }
     </script>
 </body>
 </html>
