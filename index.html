@@ -2,72 +2,67 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>العراق الأخضر | دخول</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>IRAQ GREEN V2</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #065f46; --bg: #f8fafc; }
-        body { font-family: 'Tajawal', sans-serif; background: var(--bg); display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .box { background: white; padding: 40px; border-radius: 30px; width: 350px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; }
-        input { width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #e2e8f0; border-radius: 12px; box-sizing: border-box; }
-        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; }
+        body { font-family: 'Tajawal', sans-serif; background: var(--bg); margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
+        .app-container { width: 100%; max-width: 400px; padding: 20px; }
+        .card { background: white; padding: 30px; border-radius: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        h2 { color: var(--primary); text-align: center; margin-bottom: 25px; }
+        input { width: 100%; padding: 15px; margin: 8px 0; border: 1.5px solid #e2e8f0; border-radius: 12px; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 12px; font-weight: bold; margin-top: 15px; }
         .hidden { display: none; }
-        .toggle-btn { margin-top: 15px; color: #64748b; cursor: pointer; font-size: 0.9rem; }
+        .link { text-align: center; margin-top: 15px; color: #64748b; font-size: 0.9rem; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <!-- واجهة الإنشاء -->
-    <div class="box" id="signupBox">
-        <h2>إنشاء حساب جديد</h2>
+<div class="app-container">
+    <!-- إنشاء حساب -->
+    <div class="card" id="signup">
+        <h2>إنشاء حساب</h2>
         <input type="text" id="s_name" placeholder="الاسم الكامل">
-        <input type="number" id="s_age" placeholder="العمر">
-        <input type="text" id="s_city" placeholder="المحافظة">
         <input type="email" id="s_email" placeholder="البريد الإلكتروني">
-        <button onclick="handleSignup()">تأكيد التسجيل</button>
-        <p class="toggle-btn" onclick="toggleView()">لديك حساب؟ سجل دخولك</p>
+        <input type="password" id="s_pass" placeholder="كلمة المرور">
+        <button onclick="doSignup()">تسجيل</button>
+        <p class="link" onclick="switchView()">لديك حساب؟ سجل دخولك</p>
     </div>
 
-    <!-- واجهة الدخول -->
-    <div class="box hidden" id="loginBox">
+    <!-- تسجيل دخول -->
+    <div class="card hidden" id="login">
         <h2>تسجيل الدخول</h2>
-        <input type="text" id="l_name" placeholder="أدخل اسمك المسجل">
-        <button onclick="handleLogin()">دخول</button>
-        <p class="toggle-btn" onclick="toggleView()">ليس لديك حساب؟ أنشئ حساباً</p>
+        <input type="email" id="l_email" placeholder="البريد الإلكتروني">
+        <input type="password" id="l_pass" placeholder="كلمة المرور">
+        <button onclick="doLogin()">دخول</button>
+        <p class="link" onclick="switchView()">ليس لديك حساب؟</p>
     </div>
+</div>
 
-    <!-- لوحة التحكم -->
-    <div class="box hidden" id="dashboard">
-        <h2>أهلاً بك مجدداً</h2>
-        <p id="profileData"></p>
-        <button onclick="location.reload()">تسجيل خروج</button>
-    </div>
+<script>
+    function switchView() {
+        document.getElementById('signup').classList.toggle('hidden');
+        document.getElementById('login').classList.toggle('hidden');
+    }
 
-    <script>
-        function toggleView() {
-            document.getElementById('signupBox').classList.toggle('hidden');
-            document.getElementById('loginBox').classList.toggle('hidden');
+    function doSignup() {
+        const email = document.getElementById('s_email').value;
+        const pass = document.getElementById('s_pass').value;
+        localStorage.setItem('user_email', email);
+        localStorage.setItem('user_pass', pass);
+        alert('تم الحفظ، سجل دخولك الآن');
+        switchView();
+    }
+
+    function doLogin() {
+        if(localStorage.getItem('user_email') === document.getElementById('l_email').value && 
+           localStorage.getItem('user_pass') === document.getElementById('l_pass').value) {
+            alert('أهلاً بك في العراق الأخضر');
+        } else {
+            alert('البيانات غير صحيحة');
         }
-
-        function handleSignup() {
-            const name = document.getElementById('s_name').value;
-            localStorage.setItem('user_name', name);
-            localStorage.setItem('user_age', document.getElementById('s_age').value);
-            localStorage.setItem('user_city', document.getElementById('s_city').value);
-            alert('تم إنشاء حسابك يا ' + name);
-            toggleView();
-        }
-
-        function handleLogin() {
-            const inputName = document.getElementById('l_name').value;
-            if (localStorage.getItem('user_name') === inputName) {
-                document.getElementById('loginBox').classList.add('hidden');
-                document.getElementById('dashboard').classList.remove('hidden');
-                document.getElementById('profileData').textContent = 
-                    `الاسم: ${inputName} | العمر: ${localStorage.getItem('user_age')} | المحافظة: ${localStorage.getItem('user_city')}`;
-            } else {
-                alert('الاسم غير صحيح!');
-            }
-        }
-    </script>
+    }
+</script>
 </body>
 </html>
