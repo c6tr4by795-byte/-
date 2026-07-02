@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>IRAQ GREEN V2</title>
+    <title>العراق الأخضر | نظام الدخول</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #065f46; --bg: #f8fafc; }
@@ -12,7 +12,7 @@
         .card { background: white; padding: 30px; border-radius: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
         h2 { color: var(--primary); text-align: center; margin-bottom: 25px; }
         input { width: 100%; padding: 15px; margin: 8px 0; border: 1.5px solid #e2e8f0; border-radius: 12px; box-sizing: border-box; }
-        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 12px; font-weight: bold; margin-top: 15px; }
+        button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 12px; font-weight: bold; margin-top: 15px; cursor: pointer; }
         .hidden { display: none; }
         .link { text-align: center; margin-top: 15px; color: #64748b; font-size: 0.9rem; cursor: pointer; }
     </style>
@@ -20,28 +20,28 @@
 <body>
 
 <div class="app-container">
-    <!-- إنشاء حساب -->
+    <!-- واجهة الإنشاء -->
     <div class="card" id="signup">
         <h2>إنشاء حساب</h2>
         <input type="text" id="s_name" placeholder="الاسم الكامل">
         <input type="email" id="s_email" placeholder="البريد الإلكتروني">
         <input type="password" id="s_pass" placeholder="كلمة المرور">
-        <button onclick="doSignup()">تسجيل</button>
-        <p class="link" onclick="switchView()">لديك حساب؟ سجل دخولك</p>
+        <button onclick="doSignup()">إنشاء الحساب</button>
+        <p class="link" onclick="toggle()">لديك حساب؟ سجل دخولك</p>
     </div>
 
-    <!-- تسجيل دخول -->
+    <!-- واجهة الدخول -->
     <div class="card hidden" id="login">
         <h2>تسجيل الدخول</h2>
         <input type="email" id="l_email" placeholder="البريد الإلكتروني">
         <input type="password" id="l_pass" placeholder="كلمة المرور">
         <button onclick="doLogin()">دخول</button>
-        <p class="link" onclick="switchView()">ليس لديك حساب؟</p>
+        <p class="link" onclick="toggle()">ليس لديك حساب؟</p>
     </div>
 </div>
 
 <script>
-    function switchView() {
+    function toggle() {
         document.getElementById('signup').classList.toggle('hidden');
         document.getElementById('login').classList.toggle('hidden');
     }
@@ -49,18 +49,29 @@
     function doSignup() {
         const email = document.getElementById('s_email').value;
         const pass = document.getElementById('s_pass').value;
-        localStorage.setItem('user_email', email);
-        localStorage.setItem('user_pass', pass);
-        alert('تم الحفظ، سجل دخولك الآن');
-        switchView();
+        const name = document.getElementById('s_name').value;
+
+        if(email && pass && name) {
+            localStorage.setItem('db_email', email);
+            localStorage.setItem('db_pass', pass);
+            localStorage.setItem('db_name', name);
+            alert('تم إنشاء الحساب بنجاح!');
+            toggle();
+        } else {
+            alert('يرجى ملء جميع الحقول');
+        }
     }
 
     function doLogin() {
-        if(localStorage.getItem('user_email') === document.getElementById('l_email').value && 
-           localStorage.getItem('user_pass') === document.getElementById('l_pass').value) {
-            alert('أهلاً بك في العراق الأخضر');
+        const email = document.getElementById('l_email').value;
+        const pass = document.getElementById('l_pass').value;
+
+        if(localStorage.getItem('db_email') === email && localStorage.getItem('db_pass') === pass) {
+            // الانتقال لصفحة بيضاء
+            document.body.innerHTML = '<div style="background:white; height:100vh; width:100%;"></div>';
+            console.log("تم الدخول بنجاح");
         } else {
-            alert('البيانات غير صحيحة');
+            alert('البريد أو كلمة المرور غير صحيحة');
         }
     }
 </script>
