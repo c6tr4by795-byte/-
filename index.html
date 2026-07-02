@@ -3,84 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>العراق الأخضر | احترافي</title>
-    <!-- خط حديث ومريح للعين -->
+    <title>العراق الأخضر | تسجيل جديد</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #065f46; 
-            --bg: #f8fafc; /* بياض ناصع ومريح */
+            --bg: #f8fafc;
             --card: #ffffff;
             --text: #1e293b;
-            --shadow: 0 20px 40px rgba(0,0,0,0.08); /* ظل ناعم جداً */
         }
-        body { 
-            font-family: 'Tajawal', sans-serif; 
-            background: var(--bg); 
-            color: var(--text); 
-            margin: 0; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-        }
-        .box { 
-            background: var(--card); 
-            padding: 50px; 
-            border-radius: 30px; /* حواف دائرية عالية */
-            width: 85%; 
-            max-width: 400px; 
-            box-shadow: var(--shadow); 
-            text-align: center; 
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-        h2 { color: var(--primary); margin-bottom: 30px; font-weight: 700; }
-        input { 
-            width: 100%; 
-            padding: 18px; 
-            margin: 12px 0; 
-            border-radius: 15px; /* حواف دائرية للبكسل العالي */
-            border: 2px solid #e2e8f0; 
-            background: #f1f5f9; 
-            color: #1e293b; 
-            box-sizing: border-box;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-        input:focus { border-color: var(--primary); outline: none; background: #fff; }
-        button { 
-            width: 100%; 
-            padding: 18px; 
-            background: var(--primary); 
-            border: none; 
-            border-radius: 15px; 
-            color: white; 
-            font-weight: 700; 
-            cursor: pointer; 
-            margin-top: 20px;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-        button:hover { transform: scale(1.02); opacity: 0.95; }
-        .toggle-btn { margin-top: 25px; font-size: 0.9rem; color: #64748b; cursor: pointer; }
+        body { font-family: 'Tajawal', sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .box { background: var(--card); padding: 40px; border-radius: 30px; width: 85%; max-width: 400px; box-shadow: 0 20px 40px rgba(0,0,0,0.06); text-align: center; border: 1px solid rgba(0,0,0,0.05); }
+        h2 { color: var(--primary); margin-bottom: 25px; font-weight: 700; }
+        input, select { width: 100%; padding: 16px; margin: 10px 0; border-radius: 15px; border: 2px solid #e2e8f0; background: #f8fafc; color: #1e293b; box-sizing: border-box; font-size: 15px; }
+        input:focus { border-color: var(--primary); outline: none; }
+        button { width: 100%; padding: 16px; background: var(--primary); border: none; border-radius: 15px; color: white; font-weight: 700; cursor: pointer; margin-top: 15px; font-size: 16px; }
+        button:hover { opacity: 0.9; }
+        .toggle-btn { margin-top: 20px; font-size: 0.85rem; color: #64748b; cursor: pointer; }
         #dashboard { display: none; }
     </style>
 </head>
 <body>
 
     <div class="box" id="authBox">
-        <h2 id="formTitle">إنشاء حساب</h2>
+        <h2 id="formTitle">إنشاء حساب جديد</h2>
         <form id="mainForm">
             <input type="text" id="name" placeholder="الاسم الكامل" required>
+            <input type="number" id="age" placeholder="العمر" required min="10" max="100">
+            <select id="city">
+                <option value="">اختر محافظتك</option>
+                <option value="النجف">النجف</option>
+                <option value="بغداد">بغداد</option>
+                <option value="البصرة">البصرة</option>
+                <option value="أخرى">محافظة أخرى</option>
+            </select>
             <input type="email" id="email" placeholder="البريد الإلكتروني" required>
-            <button type="submit" id="submitBtn">بدء الرحلة</button>
+            <button type="submit" id="submitBtn">تأكيد التسجيل</button>
         </form>
         <p class="toggle-btn" id="toggleText">لديك حساب بالفعل؟ سجل دخولك</p>
     </div>
 
     <div class="box" id="dashboard">
         <h2 id="welcomeMsg">أهلاً بك</h2>
-        <p style="color: #64748b;">نحن سعداء بوجودك في منصتنا المتطورة.</p>
+        <p id="userDetails" style="color: #64748b;"></p>
         <button onclick="location.reload()">تسجيل خروج</button>
     </div>
 
@@ -90,24 +55,30 @@
 
         toggleText.onclick = () => {
             isLogin = !isLogin;
-            formTitle.textContent = isLogin ? "تسجيل الدخول" : "إنشاء حساب";
-            submitBtn.textContent = isLogin ? "دخول" : "بدء الرحلة";
+            formTitle.textContent = isLogin ? "تسجيل الدخول" : "إنشاء حساب جديد";
+            submitBtn.textContent = isLogin ? "دخول" : "تأكيد التسجيل";
             toggleText.textContent = isLogin ? "ليس لديك حساب؟" : "لديك حساب بالفعل؟";
         };
 
         mainForm.onsubmit = (e) => {
             e.preventDefault();
             const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const city = document.getElementById('city').value;
+
             if (!isLogin) {
                 localStorage.setItem('user_name', name);
-                alert('تم التفعيل يا ' + name + '!');
+                localStorage.setItem('user_age', age);
+                localStorage.setItem('user_city', city);
+                alert('تم حفظ بياناتك بنجاح!');
             } else {
                 if (localStorage.getItem('user_name') === name) {
                     authBox.style.display = 'none';
                     dashboard.style.display = 'block';
                     document.getElementById('welcomeMsg').textContent = "أهلاً " + name;
+                    document.getElementById('userDetails').textContent = `العمر: ${localStorage.getItem('user_age')} | المحافظة: ${localStorage.getItem('user_city')}`;
                 } else {
-                    alert('البيانات غير صحيحة!');
+                    alert('عذراً، هذا الحساب غير مسجل!');
                 }
             }
         };
