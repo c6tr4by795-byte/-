@@ -868,3 +868,267 @@ left:150%;
 }
 
 }
+/* ==========================================================
+   IRAQ GREEN
+   Design System v3.0
+   File: components.css
+   Part 4
+========================================================== */
+
+/*==========================================================
+  MODAL
+==========================================================*/
+
+.modal{
+
+position:fixed;
+
+inset:0;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+background:rgba(0,0,0,.45);
+
+backdrop-filter:blur(8px);
+
+-webkit-backdrop-filter:blur(8px);
+
+opacity:0;
+
+visibility:hidden;
+
+transition:var(--transition);
+
+z-index:5000;
+
+}
+
+.modal.show{
+
+opacity:1;
+
+visibility:visible;
+
+}
+
+.modal-content{
+
+width:calc(100% - 32px);
+
+max-width:380px;
+
+background:var(--surface);
+
+border-radius:32px;
+
+padding:28px;
+
+box-shadow:var(--shadow-lg);
+
+animation:modalUp .35s ease;
+
+}
+
+@keyframes modalUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(30px) scale(.96);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0) scale(1);
+
+}
+
+}
+
+/*==========================================================
+  BOTTOM SHEET
+==========================================================*/
+
+.bottom-sheet{
+
+position:fixed;
+
+left:0;
+
+right:0;
+
+bottom:-100%;
+
+background:var(--surface);
+
+border-radius:30px 30px 0 0;
+
+padding:26px;
+
+transition:.45s;
+
+box-shadow:0 -12px 40px rgba(0,0,0,.15);
+
+z-index:4500;
+
+}
+
+.bottom-sheet.show{
+
+bottom:0;
+
+}
+
+.sheet-handle{
+
+width:70px;
+
+height:6px;
+
+border-radius:999px;
+
+background:#d6d6d6;
+
+margin:0 auto 20px;
+
+}
+
+/*==========================================================
+  EMPTY STATE
+==========================================================*/
+
+.empty-state{
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+justify-content:center;
+
+padding:60px 24px;
+
+text-align:center;
+
+}
+
+.empty-state-icon{
+
+font-size:64px;
+
+margin-bottom:20px;
+
+opacity:.7;
+
+}
+
+.empty-state-title{
+
+font-size:24px;
+
+font-weight:700;
+
+margin-bottom:10px;
+
+color:var(--text);
+
+}
+
+.empty-state-text{
+
+font-size:15px;
+
+line-height:1.8;
+
+color:var(--text-secondary);
+
+max-width:300px;
+
+}
+
+/*==========================================================
+  ANIMATIONS
+==========================================================*/
+
+.fade-in{
+
+animation:fadeIn .4s ease;
+
+}
+
+.scale-in{
+
+animation:scaleIn .35s ease;
+
+}
+
+.slide-up{
+
+animation:slideUp .45s ease;
+
+}
+
+@keyframes fadeIn{
+
+from{
+
+opacity:0;
+
+}
+
+to{
+
+opacity:1;
+
+}
+
+}
+
+@keyframes scaleIn{
+
+from{
+
+opacity:0;
+
+transform:scale(.92);
+
+}
+
+to{
+
+opacity:1;
+
+transform:scale(1);
+
+}
+
+}
+
+@keyframes slideUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(35px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
