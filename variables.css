@@ -1,0 +1,190 @@
+/* ==========================================================
+   IRAQ GREEN
+   Design System v3.0
+   File: variables.css
+========================================================== */
+
+:root{
+
+/* ===========================
+   Brand Colors
+=========================== */
+
+--primary:#22C55E;
+--primary-light:#4ADE80;
+--primary-dark:#15803D;
+
+--secondary:#16A34A;
+
+--accent:#84CC16;
+
+
+/* ===========================
+   Background
+=========================== */
+
+--background:#F5F7F6;
+--surface:#FFFFFF;
+--surface-alt:#EEF2EF;
+
+--dark:#101418;
+--dark-soft:#1C232A;
+
+
+/* ===========================
+   Text
+=========================== */
+
+--text:#1E293B;
+--text-secondary:#64748B;
+--text-light:#94A3B8;
+--white:#FFFFFF;
+
+
+/* ===========================
+   Status
+=========================== */
+
+--success:#10B981;
+--warning:#F59E0B;
+--danger:#EF4444;
+--info:#3B82F6;
+
+
+/* ===========================
+   Border
+=========================== */
+
+--border:#E5E7EB;
+--divider:#F1F5F9;
+
+
+/* ===========================
+   Gradient
+=========================== */
+
+--gradient-primary:
+linear-gradient(
+135deg,
+#22C55E 0%,
+#16A34A 100%
+);
+
+--gradient-secondary:
+linear-gradient(
+135deg,
+#4ADE80 0%,
+#15803D 100%
+);
+
+--gradient-dark:
+linear-gradient(
+180deg,
+#18222E 0%,
+#0F172A 100%
+);
+
+
+/* ===========================
+   Radius
+=========================== */
+
+--radius-xs:8px;
+--radius-sm:12px;
+--radius-md:18px;
+--radius-lg:24px;
+--radius-xl:30px;
+--radius-2xl:36px;
+--radius-full:999px;
+
+
+/* ===========================
+   Shadow
+=========================== */
+
+--shadow-xs:
+0 2px 6px rgba(0,0,0,.04);
+
+--shadow-sm:
+0 6px 18px rgba(0,0,0,.08);
+
+--shadow-md:
+0 12px 28px rgba(0,0,0,.12);
+
+--shadow-lg:
+0 20px 50px rgba(0,0,0,.18);
+
+--shadow-xl:
+0 30px 70px rgba(0,0,0,.25);
+
+
+/* ===========================
+   Blur
+=========================== */
+
+--blur-sm:8px;
+--blur-md:16px;
+--blur-lg:24px;
+
+
+/* ===========================
+   Typography
+=========================== */
+
+--font-main:
+"Cairo",
+sans-serif;
+
+--font-size-xs:12px;
+--font-size-sm:14px;
+--font-size-md:16px;
+--font-size-lg:18px;
+--font-size-xl:22px;
+--font-size-2xl:28px;
+--font-size-3xl:36px;
+--font-size-4xl:46px;
+
+--font-light:300;
+--font-regular:400;
+--font-medium:500;
+--font-semibold:600;
+--font-bold:700;
+--font-black:800;
+
+
+/* ===========================
+   Spacing
+=========================== */
+
+--space-1:4px;
+--space-2:8px;
+--space-3:12px;
+--space-4:16px;
+--space-5:20px;
+--space-6:24px;
+--space-7:32px;
+--space-8:40px;
+--space-9:48px;
+--space-10:64px;
+
+
+/* ===========================
+   Animation
+=========================== */
+
+--transition-fast:.18s ease;
+--transition:.30s ease;
+--transition-slow:.55s ease;
+
+
+/* ===========================
+   Mobile
+=========================== */
+
+--mobile-width:430px;
+
+--header-height:72px;
+
+--bottom-nav-height:84px;
+
+}
