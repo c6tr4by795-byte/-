@@ -1,0 +1,217 @@
+/* ==========================================================
+   IRAQ GREEN
+   Design System v3.0
+   File: typography.css
+========================================================== */
+
+/* ===========================
+   Headings
+=========================== */
+
+h1{
+
+font-size:var(--font-size-4xl);
+
+font-weight:var(--font-black);
+
+line-height:1.2;
+
+color:var(--text);
+
+}
+
+h2{
+
+font-size:var(--font-size-3xl);
+
+font-weight:var(--font-bold);
+
+line-height:1.3;
+
+color:var(--text);
+
+}
+
+h3{
+
+font-size:var(--font-size-2xl);
+
+font-weight:var(--font-bold);
+
+line-height:1.35;
+
+color:var(--text);
+
+}
+
+h4{
+
+font-size:var(--font-size-xl);
+
+font-weight:var(--font-semibold);
+
+color:var(--text);
+
+}
+
+h5{
+
+font-size:var(--font-size-lg);
+
+font-weight:var(--font-semibold);
+
+color:var(--text);
+
+}
+
+h6{
+
+font-size:var(--font-size-md);
+
+font-weight:var(--font-semibold);
+
+color:var(--text);
+
+}
+
+/* ===========================
+   Paragraph
+=========================== */
+
+p{
+
+font-size:var(--font-size-md);
+
+font-weight:var(--font-regular);
+
+line-height:1.8;
+
+color:var(--text-secondary);
+
+}
+
+/* ===========================
+   Small Text
+=========================== */
+
+small{
+
+font-size:var(--font-size-sm);
+
+color:var(--text-light);
+
+}
+
+/* ===========================
+   Links
+=========================== */
+
+a{
+
+font-size:var(--font-size-md);
+
+font-weight:var(--font-medium);
+
+transition:var(--transition);
+
+}
+
+a:hover{
+
+opacity:.8;
+
+}
+
+/* ===========================
+   Labels
+=========================== */
+
+label{
+
+font-size:var(--font-size-sm);
+
+font-weight:var(--font-semibold);
+
+color:var(--text-secondary);
+
+}
+
+/* ===========================
+   Inputs
+=========================== */
+
+input,
+textarea,
+select{
+
+font-size:var(--font-size-md);
+
+font-weight:var(--font-regular);
+
+color:var(--text);
+
+}
+
+/* ===========================
+   Buttons
+=========================== */
+
+button{
+
+font-size:var(--font-size-md);
+
+font-weight:var(--font-bold);
+
+}
+
+/* ===========================
+   Helpers
+=========================== */
+
+.text-center{
+
+text-align:center;
+
+}
+
+.text-right{
+
+text-align:right;
+
+}
+
+.text-left{
+
+text-align:left;
+
+}
+
+.text-primary{
+
+color:var(--primary);
+
+}
+
+.text-success{
+
+color:var(--success);
+
+}
+
+.text-danger{
+
+color:var(--danger);
+
+}
+
+.text-warning{
+
+color:var(--warning);
+
+}
+
+.text-muted{
+
+color:var(--text-light);
+
+}
