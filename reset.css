@@ -1,0 +1,186 @@
+/* ==========================================================
+   IRAQ GREEN
+   Design System v3.0
+   File: reset.css
+========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap');
+
+/* ===========================
+   Reset
+=========================== */
+
+*,
+*::before,
+*::after{
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+
+}
+
+/* ===========================
+   HTML
+=========================== */
+
+html{
+
+font-size:16px;
+
+scroll-behavior:smooth;
+
+-webkit-text-size-adjust:100%;
+
+}
+
+/* ===========================
+   Body
+=========================== */
+
+body{
+
+font-family:var(--font-main);
+
+background:var(--background);
+
+color:var(--text);
+
+direction:rtl;
+
+overflow-x:hidden;
+
+min-height:100vh;
+
+-webkit-font-smoothing:antialiased;
+
+text-rendering:optimizeLegibility;
+
+}
+
+/* ===========================
+   Selection
+=========================== */
+
+::selection{
+
+background:var(--primary);
+
+color:#fff;
+
+}
+
+/* ===========================
+   Images
+=========================== */
+
+img,
+picture{
+
+display:block;
+
+max-width:100%;
+
+user-select:none;
+
+}
+
+/* ===========================
+   Links
+=========================== */
+
+a{
+
+text-decoration:none;
+
+color:inherit;
+
+}
+
+/* ===========================
+   Lists
+=========================== */
+
+ul,
+ol{
+
+list-style:none;
+
+}
+
+/* ===========================
+   Forms
+=========================== */
+
+button,
+input,
+textarea,
+select{
+
+font:inherit;
+
+outline:none;
+
+border:none;
+
+background:none;
+
+}
+
+button{
+
+cursor:pointer;
+
+}
+
+/* ===========================
+   Scrollbar
+=========================== */
+
+::-webkit-scrollbar{
+
+width:6px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:rgba(0,0,0,.15);
+
+border-radius:999px;
+
+}
+
+/* ===========================
+   Mobile App
+=========================== */
+
+.app{
+
+width:100%;
+
+max-width:430px;
+
+margin:auto;
+
+min-height:100vh;
+
+background:var(--surface);
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+/* ===========================
+   Touch
+=========================== */
+
+*{
+
+-webkit-tap-highlight-color:transparent;
+
+touch-action:manipulation;
+
+}
