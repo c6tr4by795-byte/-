@@ -7,7 +7,7 @@
 
 body{
 
-    background:#f4f7f5;
+    background:#f5f7fb;
 
     display:flex;
 
@@ -17,25 +17,27 @@ body{
 
     min-height:100vh;
 
+    padding:20px;
+
 }
 
 .login-card{
 
-    width:380px;
+    width:100%;
 
-    background:#ffffff;
+    max-width:420px;
+
+    background:#fff;
 
     border-radius:28px;
 
-    padding:35px;
+    padding:35px 28px;
 
     box-shadow:0 15px 40px rgba(0,0,0,.08);
 
     display:flex;
 
     flex-direction:column;
-
-    gap:18px;
 
 }
 
@@ -45,19 +47,21 @@ body{
 
     height:90px;
 
-    border-radius:50%;
-
     margin:auto;
 
-    background:#1b8f43;
+    margin-bottom:20px;
 
-    color:white;
+    border-radius:50%;
+
+    background:#188038;
 
     display:flex;
 
     justify-content:center;
 
     align-items:center;
+
+    color:#fff;
 
     font-size:42px;
 
@@ -67,7 +71,9 @@ h1{
 
     text-align:center;
 
-    color:#1b8f43;
+    color:#188038;
+
+    margin-bottom:8px;
 
 }
 
@@ -75,35 +81,41 @@ p{
 
     text-align:center;
 
-    color:#666;
+    color:#777;
 
-    margin-bottom:10px;
+    margin-bottom:25px;
 
 }
 
 input{
 
+    width:100%;
+
     height:55px;
+
+    border:1px solid #ddd;
 
     border-radius:16px;
 
-    border:1px solid #dcdcdc;
+    padding:0 18px;
 
-    padding:0 15px;
-
-    font-size:16px;
+    margin-bottom:15px;
 
     outline:none;
+
+    font-size:16px;
 
 }
 
 input:focus{
 
-    border-color:#1b8f43;
+    border-color:#188038;
 
 }
 
 button{
+
+    width:100%;
 
     height:55px;
 
@@ -117,29 +129,21 @@ button{
 
     font-weight:bold;
 
-    transition:.25s;
-
-}
-
-#registerBtn{
-
-    background:#1b8f43;
-
-    color:white;
+    margin-top:10px;
 
 }
 
 #loginBtn{
 
-    background:#0f6bdc;
+    background:#188038;
 
-    color:white;
+    color:#fff;
 
 }
 
 #googleBtn{
 
-    background:white;
+    background:#fff;
 
     color:#222;
 
@@ -147,8 +151,16 @@ button{
 
 }
 
-button:hover{
+.link{
 
-    transform:translateY(-2px);
+    text-align:center;
+
+    margin-top:18px;
+
+    color:#188038;
+
+    text-decoration:none;
+
+    font-size:15px;
 
 }
