@@ -1,63 +1,61 @@
 import {
-  login,
-  loginGoogle,
-  googleResult
+    login,
+    loginGoogle,
+    googleResult
 } from "./auth.js";
 
-// عند الرجوع من تسجيل Google
-googleResult()
-.then((result)=>{
+import {
+    createUser
+} from "./database.js";
 
-    if(result && result.user){
+// إكمال تسجيل Google بعد الرجوع
+(async () => {
 
-        window.location.href="index.html";
+    try {
+
+        const result = await googleResult();
+
+        if (result && result.user) {
+
+            await createUser(result.user);
+
+            window.location.replace("index.html");
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
 
     }
 
-})
-.catch((error)=>{
+})();
 
-    alert(error.message);
+const email = document.getElementById("email");
+const password = document.getElementById("password");
 
-});
+document.getElementById("loginBtn").addEventListener("click", async () => {
 
-// عناصر الصفحة
+    if (!email.value || !password.value) {
 
-const email=document.getElementById("email");
-
-const password=document.getElementById("password");
-
-const loginBtn=document.getElementById("loginBtn");
-
-const googleBtn=document.getElementById("googleBtn");
-
-// تسجيل الدخول
-
-loginBtn.addEventListener("click",async()=>{
-
-    if(email.value===""||password.value===""){
-
-        alert("يرجى إدخال البريد الإلكتروني وكلمة المرور");
+        alert("أدخل البريد الإلكتروني وكلمة المرور");
 
         return;
 
     }
 
-    try{
+    try {
 
         await login(
-
             email.value.trim(),
-
             password.value
-
         );
 
-        window.location.href="index.html";
+        window.location.replace("index.html");
 
-    }
+    } catch (error) {
 
-    catch(error){
+        console.error(error);
 
         alert(error.message);
 
@@ -65,17 +63,15 @@ loginBtn.addEventListener("click",async()=>{
 
 });
 
-// Google
+document.getElementById("googleBtn").addEventListener("click", async () => {
 
-googleBtn.addEventListener("click",async()=>{
-
-    try{
+    try {
 
         await loginGoogle();
 
-    }
+    } catch (error) {
 
-    catch(error){
+        console.error(error);
 
         alert(error.message);
 
