@@ -1,87 +1,84 @@
-import { register, login, loginGoogle } from "./auth.js";
-import { createUser } from "./database.js";
+import {
+  login,
+  loginGoogle,
+  googleResult
+} from "./auth.js";
 
-const name = document.getElementById("name");
-const email = document.getElementById("email");
-const password = document.getElementById("password");
+// عند الرجوع من تسجيل Google
+googleResult()
+.then((result)=>{
 
-const registerBtn = document.getElementById("registerBtn");
-const loginBtn = document.getElementById("loginBtn");
-const googleBtn = document.getElementById("googleBtn");
+    if(result && result.user){
 
-// إنشاء حساب
-registerBtn.onclick = async () => {
-
-    try {
-
-        const result = await register(
-            email.value,
-            password.value
-        );
-
-        await createUser({
-
-            uid: result.user.uid,
-
-            displayName: name.value,
-
-            email: result.user.email,
-
-            photoURL: "",
-
-            phoneNumber: ""
-
-        });
-
-        alert("تم إنشاء الحساب");
-
-        window.location.href = "index.html";
-
-    } catch (e) {
-
-        alert(e.message);
+        window.location.href="index.html";
 
     }
 
-};
+})
+.catch((error)=>{
+
+    alert(error.message);
+
+});
+
+// عناصر الصفحة
+
+const email=document.getElementById("email");
+
+const password=document.getElementById("password");
+
+const loginBtn=document.getElementById("loginBtn");
+
+const googleBtn=document.getElementById("googleBtn");
 
 // تسجيل الدخول
-loginBtn.onclick = async () => {
 
-    try {
+loginBtn.addEventListener("click",async()=>{
+
+    if(email.value===""||password.value===""){
+
+        alert("يرجى إدخال البريد الإلكتروني وكلمة المرور");
+
+        return;
+
+    }
+
+    try{
 
         await login(
-            email.value,
+
+            email.value.trim(),
+
             password.value
+
         );
 
-        alert("تم تسجيل الدخول");
-
-        window.location.href = "index.html";
-
-    } catch (e) {
-
-        alert(e.message);
+        window.location.href="index.html";
 
     }
 
-};
+    catch(error){
+
+        alert(error.message);
+
+    }
+
+});
 
 // Google
-googleBtn.onclick = async () => {
 
-    try {
+googleBtn.addEventListener("click",async()=>{
 
-        const result = await loginGoogle();
+    try{
 
-        await createUser(result.user);
-
-        window.location.href = "index.html";
-
-    } catch (e) {
-
-        alert(e.message);
+        await loginGoogle();
 
     }
 
-};
+    catch(error){
+
+        alert(error.message);
+
+    }
+
+});
