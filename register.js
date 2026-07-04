@@ -6,21 +6,19 @@ const email = document.getElementById("email");
 const password = document.getElementById("password");
 const confirmPassword = document.getElementById("confirmPassword");
 
-const registerBtn = document.getElementById("registerBtn");
+document.getElementById("registerBtn").addEventListener("click", async () => {
 
-registerBtn.addEventListener("click", async () => {
+    const fullName = name.value.trim();
+    const userEmail = email.value.trim();
+    const userPassword = password.value;
+    const confirm = confirmPassword.value;
 
-    if (
-        name.value.trim() === "" ||
-        email.value.trim() === "" ||
-        password.value === "" ||
-        confirmPassword.value === ""
-    ) {
+    if (!fullName || !userEmail || !userPassword || !confirm) {
         alert("يرجى ملء جميع الحقول");
         return;
     }
 
-    if (password.value !== confirmPassword.value) {
+    if (userPassword !== confirm) {
         alert("كلمتا المرور غير متطابقتين");
         return;
     }
@@ -28,23 +26,21 @@ registerBtn.addEventListener("click", async () => {
     try {
 
         const result = await register(
-            email.value.trim(),
-            password.value
+            userEmail,
+            userPassword
         );
 
-        await createUser({
-            uid: result.user.uid,
-            displayName: name.value.trim(),
-            email: result.user.email,
-            photoURL: "",
-            phoneNumber: ""
-        });
+        result.user.displayName = fullName;
+
+        await createUser(result.user);
 
         alert("تم إنشاء الحساب بنجاح");
 
-        window.location.href = "index.html";
+        window.location.replace("index.html");
 
     } catch (error) {
+
+        console.error(error);
 
         alert(error.message);
 
