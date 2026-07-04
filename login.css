@@ -1,0 +1,166 @@
+/* ==========================================================
+   IRAQ GREEN
+   Login Screen
+========================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    background:#f5f7fb;
+
+    font-family:Cairo,sans-serif;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:100vh;
+
+    padding:20px;
+
+}
+
+.login-screen{
+
+    width:100%;
+
+    max-width:430px;
+
+}
+
+.login-card{
+
+    background:#ffffff;
+
+    border-radius:28px;
+
+    padding:35px 25px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+
+}
+
+.logo{
+
+    text-align:center;
+
+    margin-bottom:35px;
+
+}
+
+.logo-icon{
+
+    width:90px;
+
+    height:90px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    background:#1E8E3E;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:42px;
+
+    color:#fff;
+
+    margin-bottom:18px;
+
+}
+
+.logo h1{
+
+    font-size:32px;
+
+    color:#1E8E3E;
+
+    margin-bottom:8px;
+
+}
+
+.logo p{
+
+    color:#666;
+
+    font-size:15px;
+
+}
+
+#loginForm{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+#loginForm input{
+
+    height:55px;
+
+    border:1px solid #ddd;
+
+    border-radius:16px;
+
+    padding:0 18px;
+
+    font-size:16px;
+
+    outline:none;
+
+}
+
+#loginForm input:focus{
+
+    border-color:#1E8E3E;
+
+}
+
+#loginForm button{
+
+    height:55px;
+
+    border:none;
+
+    border-radius:16px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+}
+
+#loginForm button[type="submit"]{
+
+    background:#1E8E3E;
+
+    color:#fff;
+
+}
+
+#googleLogin{
+
+    background:#fff;
+
+    color:#333;
+
+    border:1px solid #ddd !important;
+
+}
