@@ -9,7 +9,9 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   GoogleAuthProvider,
-  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
+  sendPasswordResetEmail,
   signOut,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
@@ -37,9 +39,26 @@ export async function loginGoogle() {
 
   const provider = new GoogleAuthProvider();
 
-  return await signInWithPopup(
+  await signInWithRedirect(
     auth,
     provider
+  );
+
+}
+
+// نتيجة تسجيل Google
+export async function googleResult() {
+
+  return await getRedirectResult(auth);
+
+}
+
+// إعادة تعيين كلمة المرور
+export async function resetPassword(email) {
+
+  return await sendPasswordResetEmail(
+    auth,
+    email
   );
 
 }
