@@ -6,76 +6,133 @@
 import { auth } from "./firebase.js";
 
 import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithRedirect,
-  getRedirectResult,
-  sendPasswordResetEmail,
-  signOut,
-  onAuthStateChanged
+
+createUserWithEmailAndPassword,
+
+signInWithEmailAndPassword,
+
+GoogleAuthProvider,
+
+signInWithRedirect,
+
+getRedirectResult,
+
+sendPasswordResetEmail,
+
+signOut,
+
+onAuthStateChanged,
+
+updateProfile
+
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 // إنشاء حساب
-export async function register(email, password) {
-  return await createUserWithEmailAndPassword(
-    auth,
-    email,
-    password
-  );
+export async function register(name,email,password){
+
+const result=await createUserWithEmailAndPassword(
+
+auth,
+
+email,
+
+password
+
+);
+
+await updateProfile(
+
+result.user,
+
+{
+
+displayName:name
+
+}
+
+);
+
+return result;
+
 }
 
 // تسجيل الدخول
-export async function login(email, password) {
-  return await signInWithEmailAndPassword(
-    auth,
-    email,
-    password
-  );
-}
+export async function login(email,password){
 
-// تسجيل بواسطة Google
-export async function loginGoogle() {
+return await signInWithEmailAndPassword(
 
-  const provider = new GoogleAuthProvider();
+auth,
 
-  await signInWithRedirect(
-    auth,
-    provider
-  );
+email,
+
+password
+
+);
 
 }
 
-// نتيجة تسجيل Google
-export async function googleResult() {
+// Google
 
-  return await getRedirectResult(auth);
+export async function loginGoogle(){
 
-}
+const provider=new GoogleAuthProvider();
 
-// إعادة تعيين كلمة المرور
-export async function resetPassword(email) {
+provider.setCustomParameters({
 
-  return await sendPasswordResetEmail(
-    auth,
-    email
-  );
+prompt:"select_account"
 
-}
+});
 
-// تسجيل الخروج
-export async function logout() {
+await signInWithRedirect(
 
-  return await signOut(auth);
+auth,
+
+provider
+
+);
 
 }
 
-// مراقبة حالة المستخدم
-export function authListener(callback) {
+// نتيجة Google
 
-  onAuthStateChanged(
-    auth,
-    callback
-  );
+export async function googleResult(){
+
+return await getRedirectResult(auth);
+
+}
+
+// نسيت كلمة المرور
+
+export async function resetPassword(email){
+
+return await sendPasswordResetEmail(
+
+auth,
+
+email
+
+);
+
+}
+
+// تسجيل خروج
+
+export async function logout(){
+
+return await signOut(auth);
+
+}
+
+// مراقبة المستخدم
+
+export function authListener(callback){
+
+onAuthStateChanged(
+
+auth,
+
+callback
+
+);
 
 }
