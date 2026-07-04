@@ -1,46 +1,87 @@
-import { login, loginGoogle } from "./auth.js";
+import { register, login, loginGoogle } from "./auth.js";
+import { createUser } from "./database.js";
 
-const loginForm = document.getElementById("loginForm");
-const googleButton = document.getElementById("googleLogin");
+const name = document.getElementById("name");
+const email = document.getElementById("email");
+const password = document.getElementById("password");
 
-loginForm.addEventListener("submit", async (event) => {
+const registerBtn = document.getElementById("registerBtn");
+const loginBtn = document.getElementById("loginBtn");
+const googleBtn = document.getElementById("googleBtn");
 
-    event.preventDefault();
-
-    const email = document.getElementById("email").value.trim();
-
-    const password = document.getElementById("password").value;
-
-    try {
-
-        await login(email, password);
-
-        alert("تم تسجيل الدخول بنجاح");
-
-        window.location.href = "index.html";
-
-    } catch (error) {
-
-        alert(error.message);
-
-    }
-
-});
-
-googleButton.addEventListener("click", async () => {
+// إنشاء حساب
+registerBtn.onclick = async () => {
 
     try {
 
-        await loginGoogle();
+        const result = await register(
+            email.value,
+            password.value
+        );
 
-        alert("تم تسجيل الدخول بواسطة Google");
+        await createUser({
+
+            uid: result.user.uid,
+
+            displayName: name.value,
+
+            email: result.user.email,
+
+            photoURL: "",
+
+            phoneNumber: ""
+
+        });
+
+        alert("تم إنشاء الحساب");
 
         window.location.href = "index.html";
 
-    } catch (error) {
+    } catch (e) {
 
-        alert(error.message);
+        alert(e.message);
 
     }
 
-});
+};
+
+// تسجيل الدخول
+loginBtn.onclick = async () => {
+
+    try {
+
+        await login(
+            email.value,
+            password.value
+        );
+
+        alert("تم تسجيل الدخول");
+
+        window.location.href = "index.html";
+
+    } catch (e) {
+
+        alert(e.message);
+
+    }
+
+};
+
+// Google
+googleBtn.onclick = async () => {
+
+    try {
+
+        const result = await loginGoogle();
+
+        await createUser(result.user);
+
+        window.location.href = "index.html";
+
+    } catch (e) {
+
+        alert(e.message);
+
+    }
+
+};
