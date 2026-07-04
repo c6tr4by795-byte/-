@@ -1,65 +1,63 @@
 // ===============================
 // IRAQ GREEN
-// DATABASE SYSTEM
+// DATABASE
 // ===============================
 
 import { db } from "./firebase.js";
 
 import {
 
-  doc,
+doc,
 
-  setDoc,
+setDoc,
 
-  getDoc,
+getDoc,
 
-  updateDoc,
+updateDoc,
 
-  serverTimestamp
+serverTimestamp
 
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-// إنشاء بيانات مستخدم
+// إنشاء مستخدم
 
 export async function createUser(user){
 
-  await setDoc(
+await setDoc(
 
-    doc(db,"users",user.uid),
+doc(db,"users",user.uid),
 
-    {
+{
 
-      uid:user.uid,
+uid:user.uid,
 
-      name:user.displayName || "",
+name:user.displayName || "",
 
-      email:user.email || "",
+email:user.email || "",
 
-      photo:user.photoURL || "",
+photo:user.photoURL || "",
 
-      phone:user.phoneNumber || "",
+phone:user.phoneNumber || "",
 
-      city:"النجف",
+city:"النجف",
 
-      role:"user",
+role:"user",
 
-      points:0,
+points:0,
 
-      trees:0,
+trees:0,
 
-      cards:[],
+createdAt:serverTimestamp()
 
-      createdAt:serverTimestamp()
+},
 
-    },
+{
 
-    {
+merge:true
 
-      merge:true
+}
 
-    }
-
-  );
+);
 
 }
 
@@ -67,26 +65,28 @@ export async function createUser(user){
 
 export async function getUser(uid){
 
-  const snap = await getDoc(
+const snap=await getDoc(
 
-    doc(db,"users",uid)
+doc(db,"users",uid)
 
-  );
+);
 
-  return snap.data();
+if(!snap.exists()) return null;
+
+return snap.data();
 
 }
 
-// تحديث بيانات مستخدم
+// تحديث بيانات
 
 export async function updateUser(uid,data){
 
-  await updateDoc(
+return await updateDoc(
 
-    doc(db,"users",uid),
+doc(db,"users",uid),
 
-    data
+data
 
-  );
+);
 
 }
