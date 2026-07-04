@@ -8,7 +8,7 @@ import {
   createUser
 } from "./database.js";
 
-// عند الرجوع من Google
+// عند الرجوع من تسجيل Google
 window.addEventListener("load", async () => {
 
   try {
@@ -19,7 +19,7 @@ window.addEventListener("load", async () => {
 
       await createUser(result.user);
 
-      window.location.href = "index.html";
+      window.location.href = "home.html";
 
     }
 
@@ -31,58 +31,77 @@ window.addEventListener("load", async () => {
 
 });
 
-// زر تسجيل الدخول
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+
 const loginBtn = document.getElementById("loginBtn");
-
-if (loginBtn) {
-
-  loginBtn.onclick = async () => {
-
-    const email = document.getElementById("email").value.trim();
-
-    const password = document.getElementById("password").value;
-
-    if (!email || !password) {
-
-      alert("يرجى إدخال البريد الإلكتروني وكلمة المرور");
-
-      return;
-
-    }
-
-    try {
-
-      await login(email, password);
-
-      window.location.href = "index.html";
-
-    } catch (error) {
-
-      alert(error.message);
-
-    }
-
-  };
-
-}
-
-// زر Google
 const googleBtn = document.getElementById("googleBtn");
 
-if (googleBtn) {
+// تسجيل الدخول
+loginBtn.addEventListener("click", async () => {
 
-  googleBtn.onclick = async () => {
+  const userEmail = email.value.trim();
+  const userPassword = password.value;
 
-    try {
+  if (!userEmail || !userPassword) {
 
-      await loginGoogle();
+    alert("يرجى إدخال البريد الإلكتروني وكلمة المرور");
 
-    } catch (error) {
+    return;
 
-      alert(error.message);
+  }
+
+  try {
+
+    const result = await login(
+      userEmail,
+      userPassword
+    );
+
+    await createUser(result.user);
+
+    window.location.href = "home.html";
+
+  } catch (error) {
+
+    switch (error.code) {
+
+      case "auth/user-not-found":
+        alert("الحساب غير موجود");
+        break;
+
+      case "auth/wrong-password":
+        alert("كلمة المرور غير صحيحة");
+        break;
+
+      case "auth/invalid-credential":
+        alert("البريد الإلكتروني أو كلمة المرور غير صحيحة");
+        break;
+
+      case "auth/network-request-failed":
+        alert("تحقق من اتصال الإنترنت ثم أعد المحاولة");
+        break;
+
+      default:
+        alert(error.message);
 
     }
 
-  };
+  }
 
-}
+});
+
+// Google
+googleBtn.addEventListener("click", async () => {
+
+  try {
+
+    await loginGoogle();
+
+  } catch (error) {
+
+    alert(error.message);
+
+  }
+
+});
