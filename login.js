@@ -1,81 +1,88 @@
-alert("login.js loaded");
 import {
-    login,
-    loginGoogle,
-    googleResult
+  login,
+  loginGoogle,
+  googleResult
 } from "./auth.js";
 
 import {
-    createUser
+  createUser
 } from "./database.js";
 
-// إكمال تسجيل Google بعد الرجوع
-(async () => {
+// عند الرجوع من Google
+window.addEventListener("load", async () => {
 
-    try {
+  try {
 
-        const result = await googleResult();
+    const result = await googleResult();
 
-        if (result && result.user) {
+    if (result && result.user) {
 
-            await createUser(result.user);
+      await createUser(result.user);
 
-            window.location.replace("index.html");
-
-        }
-
-    } catch (error) {
-
-        console.error(error);
+      window.location.href = "index.html";
 
     }
 
-})();
+  } catch (error) {
 
-const email = document.getElementById("email");
-const password = document.getElementById("password");
+    console.error(error);
 
-document.getElementById("loginBtn").addEventListener("click", async () => {
-
-    if (!email.value || !password.value) {
-
-        alert("أدخل البريد الإلكتروني وكلمة المرور");
-
-        return;
-
-    }
-
-    try {
-
-        await login(
-            email.value.trim(),
-            password.value
-        );
-
-        window.location.replace("index.html");
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert(error.message);
-
-    }
+  }
 
 });
 
-document.getElementById("googleBtn").addEventListener("click", async () => {
+// زر تسجيل الدخول
+const loginBtn = document.getElementById("loginBtn");
 
-    try {
+if (loginBtn) {
 
-        await loginGoogle();
+  loginBtn.onclick = async () => {
 
-    } catch (error) {
+    const email = document.getElementById("email").value.trim();
 
-        console.error(error);
+    const password = document.getElementById("password").value;
 
-        alert(error.message);
+    if (!email || !password) {
+
+      alert("يرجى إدخال البريد الإلكتروني وكلمة المرور");
+
+      return;
 
     }
 
-});
+    try {
+
+      await login(email, password);
+
+      window.location.href = "index.html";
+
+    } catch (error) {
+
+      alert(error.message);
+
+    }
+
+  };
+
+}
+
+// زر Google
+const googleBtn = document.getElementById("googleBtn");
+
+if (googleBtn) {
+
+  googleBtn.onclick = async () => {
+
+    try {
+
+      await loginGoogle();
+
+    } catch (error) {
+
+      alert(error.message);
+
+    }
+
+  };
+
+}
