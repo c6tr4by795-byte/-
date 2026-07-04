@@ -6,14 +6,21 @@ const email = document.getElementById("email");
 const password = document.getElementById("password");
 const confirmPassword = document.getElementById("confirmPassword");
 
-document.getElementById("registerBtn").addEventListener("click", async () => {
+const registerBtn = document.getElementById("registerBtn");
+
+registerBtn.addEventListener("click", async () => {
 
     const fullName = name.value.trim();
     const userEmail = email.value.trim();
     const userPassword = password.value;
     const confirm = confirmPassword.value;
 
-    if (!fullName || !userEmail || !userPassword || !confirm) {
+    if (
+        fullName === "" ||
+        userEmail === "" ||
+        userPassword === "" ||
+        confirm === ""
+    ) {
         alert("يرجى ملء جميع الحقول");
         return;
     }
@@ -26,23 +33,41 @@ document.getElementById("registerBtn").addEventListener("click", async () => {
     try {
 
         const result = await register(
+            fullName,
             userEmail,
             userPassword
         );
 
-        result.user.displayName = fullName;
-
         await createUser(result.user);
 
-        alert("تم إنشاء الحساب بنجاح");
+        alert("✅ تم إنشاء الحساب بنجاح");
 
-        window.location.replace("index.html");
+        window.location.href = "home.html";
 
     } catch (error) {
 
-        console.error(error);
+        switch (error.code) {
 
-        alert(error.message);
+            case "auth/email-already-in-use":
+                alert("هذا البريد الإلكتروني مستخدم مسبقًا");
+                break;
+
+            case "auth/invalid-email":
+                alert("البريد الإلكتروني غير صحيح");
+                break;
+
+            case "auth/weak-password":
+                alert("كلمة المرور يجب أن تكون 6 أحرف أو أكثر");
+                break;
+
+            case "auth/network-request-failed":
+                alert("تحقق من اتصال الإنترنت");
+                break;
+
+            default:
+                alert(error.message);
+
+        }
 
     }
 
