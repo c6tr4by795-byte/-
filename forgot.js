@@ -5,22 +5,44 @@ const resetBtn = document.getElementById("resetBtn");
 
 resetBtn.addEventListener("click", async () => {
 
-    if (email.value.trim() === "") {
+    const userEmail = email.value.trim();
+
+    if (userEmail === "") {
+
         alert("يرجى إدخال البريد الإلكتروني");
+
         return;
+
     }
 
     try {
 
-        await resetPassword(email.value.trim());
+        await resetPassword(userEmail);
 
         alert("تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.");
 
-        window.location.href = "login.html";
+        window.location.href = "index.html";
 
     } catch (error) {
 
-        alert(error.message);
+        switch (error.code) {
+
+            case "auth/user-not-found":
+                alert("لا يوجد حساب بهذا البريد الإلكتروني");
+                break;
+
+            case "auth/invalid-email":
+                alert("البريد الإلكتروني غير صحيح");
+                break;
+
+            case "auth/network-request-failed":
+                alert("تحقق من اتصال الإنترنت");
+                break;
+
+            default:
+                alert(error.message);
+
+        }
 
     }
 
